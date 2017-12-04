@@ -29,7 +29,7 @@ func ckdata(t *testing.T, b *Buffer, want string) {
 }
 
 func TestInsert(t *testing.T) {
-	b := new(Buffer)
+	b := &Buffer{Block: &Fixed{}}
 	in(b, "the", 0)
 	cklen(t, b, 3)
 	in(b, " quick", 3)
@@ -49,7 +49,7 @@ func TestInsert(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
-	b := new(Buffer)
+	b := &Buffer{Block: &Fixed{}}
 	in(b, "the quick brown fox jumps over the lazy dog", 0)
 	ckdata(t, b, "the quick brown fox jumps over the lazy dog")
 	del(b, 1, 2)
@@ -65,7 +65,7 @@ func TestDelete(t *testing.T) {
 }
 
 func TestWrite(t *testing.T) {
-	b := new(Buffer)
+	b := &Buffer{Block: &Fixed{}}
 	for _, v := range []string{"the quick ", "brown", " f", "", "o", "", "", "", "x", " jumps over ", "the lazy", " dog"} {
 		n, err := wr(b, v)
 		if err != nil {
@@ -82,7 +82,7 @@ func TestWrite(t *testing.T) {
 }
 
 func TestWriteAt(t *testing.T) {
-	b := new(Buffer)
+	b := &Buffer{Block: &Fixed{}}
 	x := "xoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxo"
 	wr(b, x)
 	b.Seek(0, 0)
@@ -94,7 +94,7 @@ func TestWriteAt(t *testing.T) {
 }
 
 func TestSeek(t *testing.T) {
-	b := new(Buffer)
+	b := &Buffer{Block: &Fixed{}}
 	x := "xoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxo"
 	wr(b, x)
 	b.Seek(0, 0)
